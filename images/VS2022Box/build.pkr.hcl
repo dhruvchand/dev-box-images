@@ -55,48 +55,27 @@ build {
     script = "../../scripts/Enable-AutoLogon.ps1"
   }
 
-  provisioner "windows-restart" {
-    # needed to get elevated script execution working
-    restart_timeout = "30m"
-    pause_before    = "2m"
-  }
-
-  # https://github.com/rgl/packer-plugin-windows-update
-  provisioner "windows-update" {
-  }
 
   provisioner "powershell" {
     elevated_user     = build.User
     elevated_password = build.Password
     scripts = [
-      "../../scripts/Install-PsModules.ps1",
-      "../../scripts/Install-AzPsModule.ps1",
       "../../scripts/Install-Chocolatey.ps1"
     ]
   }
+
+
+  provisioner "file" {
+     source = "../../packages/package.config"
+     destination = "C:/Windows/Temp/package.config"
+  }
+
 
   provisioner "powershell" {
     elevated_user     = build.User
     elevated_password = build.Password
     inline = [
-      "choco install postman --yes --no-progress",
-      "choco install googlechrome --yes --no-progress",
-      "choco install firefox --yes --no-progress"
-    ]
-  }
-
-  provisioner "powershell" {
-    elevated_user     = build.User
-    elevated_password = build.Password
-    scripts = [
-      "../../scripts/Install-Git.ps1",
-      "../../scripts/Install-GitHub-CLI.ps1",
-      "../../scripts/Install-DotNet.ps1",
-      "../../scripts/Install-Python.ps1",
-      "../../scripts/Install-GitHubDesktop.ps1",
-      "../../scripts/Install-VSCode.ps1",
-      "../../scripts/Install-AzureCLI.ps1",
-      "../../scripts/Install-VS2022.ps1"
+      "choco install C:/Windows/Temp/package.config --yes --no-progress"
     ]
   }
 
