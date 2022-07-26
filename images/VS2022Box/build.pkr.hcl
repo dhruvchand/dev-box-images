@@ -55,8 +55,7 @@ build {
     elevated_user     = build.User
     elevated_password = build.Password
     scripts = [
-      "../../scripts/Install-PsModules.ps1",
-      "../../scripts/Install-AzPsModule.ps1",
+      "../../scripts/Install-PsModules.ps1",   
       "../../scripts/Install-Chocolatey.ps1"
     ]
   }
