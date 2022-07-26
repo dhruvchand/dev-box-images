@@ -59,13 +59,20 @@ build {
     ]
   }
 
+
+  provisioner "file" {
+     source = "../../packages/packages.config"
+     destination = "C:/Windows/Temp/packages.config"
+  }
+
   provisioner "powershell" {
     elevated_user     = build.User
     elevated_password = build.Password
     inline = [
-      "choco install postman --yes --no-progress"
+      "choco install C:/Windows/Temp/packages.config --yes --no-progress"
     ]
   }
+
 
   provisioner "powershell" {
     elevated_user     = build.User
