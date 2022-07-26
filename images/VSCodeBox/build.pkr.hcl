@@ -55,8 +55,6 @@ build {
     elevated_user     = build.User
     elevated_password = build.Password
     scripts = [
-      "../../scripts/Install-PsModules.ps1",
-      "../../scripts/Install-AzPsModule.ps1",
       "../../scripts/Install-Chocolatey.ps1"
     ]
   }
@@ -65,9 +63,7 @@ build {
     elevated_user     = build.User
     elevated_password = build.Password
     inline = [
-      "choco install postman --yes --no-progress",
-      "choco install googlechrome --yes --no-progress",
-      "choco install firefox --yes --no-progress"
+      "choco install postman --yes --no-progress"
     ]
   }
 
@@ -75,13 +71,7 @@ build {
     elevated_user     = build.User
     elevated_password = build.Password
     scripts = [
-      "../../scripts/Install-Git.ps1",
-      "../../scripts/Install-GitHub-CLI.ps1",
-      "../../scripts/Install-DotNet.ps1",
-      "../../scripts/Install-Python.ps1",
-      "../../scripts/Install-GitHubDesktop.ps1",
-      "../../scripts/Install-AzureCLI.ps1",
-      "../../scripts/Install-VSCode.ps1"
+      "../../scripts/Install-Git.ps1"
     ]
   }
 
