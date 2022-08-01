@@ -51,26 +51,43 @@ build {
     pause_before    = "2m"
   }
 
+//  provisioner "powershell" {
+//    elevated_user     = build.User
+//    elevated_password = build.Password
+//    scripts = [
+//      "../../scripts/Install-Chocolatey.ps1"
+//    ]
+//  }
+//
+//
+//  provisioner "file" {
+//     source = "../../packages/packages.config"
+//     destination = "C:/Windows/Temp/packages.config"
+//  }
+//
+//  provisioner "powershell" {
+//    elevated_user     = build.User
+//    elevated_password = build.Password
+//    inline = [
+//      "choco install C:/Windows/Temp/packages.config --yes --no-progress"
+//    ]
+//  }
+//
+
   provisioner "powershell" {
     elevated_user     = build.User
     elevated_password = build.Password
-    scripts = [
-      "../../scripts/Install-Chocolatey.ps1"
-    ]
+    inline = ["mkdir c:\\Windows\\Temp\\startupScripts", "mkdir c:\\Windows\\Temp\\startupScripts\\scripts"]
   }
-
 
   provisioner "file" {
-     source = "../../packages/packages.config"
-     destination = "C:/Windows/Temp/packages.config"
+     source = "./startup/startup.ps1"
+     destination = "C:/Windows/Temp/startupScripts/startup.ps1"
   }
 
-  provisioner "powershell" {
-    elevated_user     = build.User
-    elevated_password = build.Password
-    inline = [
-      "choco install C:/Windows/Temp/packages.config --yes --no-progress"
-    ]
+  provisioner "file" {
+     source = "./startup/scripts/"
+     destination = "C:/Windows/Temp/startupScripts/scripts"
   }
 
 
@@ -81,6 +98,15 @@ build {
       "../../scripts/Install-Git.ps1"
     ]
   }
+
+  provisioner "powershell" {
+    elevated_user     = build.User
+    elevated_password = build.Password
+    scripts = [
+      "../../scripts/Add-StartupJobs.ps1"
+    ]
+  }
+
 
   // this doesn't work yet
   // provisioner "powershell" {
